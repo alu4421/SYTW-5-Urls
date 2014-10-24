@@ -12,7 +12,7 @@ require 'omniauth-google-oauth2'
 
 
 configure :development, :test do
-  DataMapper.setup( :default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/db/my_shortened_urls.db" )
+  DataMapper.setup( :default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/db/urls.db" )
 end
 
 
