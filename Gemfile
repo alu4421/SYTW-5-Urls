@@ -7,6 +7,7 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'pry'
 gem 'erubis'
+gem 'rack-cache'
 
 
 group :production do

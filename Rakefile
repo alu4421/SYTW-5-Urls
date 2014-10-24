@@ -1,12 +1,13 @@
 desc "run test"
+
   task :test do
     sh "ruby test/test.rb"
 end
 
-
 desc "run the http server"
 task :default do
-  sh "ruby app.rb"
+  sh "rackup"
+  #sh "ruby app.rb"
 end
 
 desc "run the server via rackup"
