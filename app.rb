@@ -11,7 +11,7 @@ require 'omniauth-google-oauth2'
 
 #Database Configuration
   configure :development, :test do
-    DataMapper.setup( :default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/db/urls.db" )
+    DataMapper.setup( :default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/db/main.db" )
   end
 
   configure :production do
@@ -45,7 +45,7 @@ get '/' do
   if session[:auth] then
     @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :email => session[:email])
   else
-    @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :email => "")
+    @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :email => nil)
   end
   haml :index
 end
@@ -57,7 +57,7 @@ get '/auth/:name/callback' do
     session[:nombre] = @auth['info'].name
     if session[:auth] then
       @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :email => session[:email])
-      haml :index
+      redirect '/'
     end
     haml :index
 end
@@ -71,8 +71,8 @@ post '/' do
   uri = URI::parse(params[:url])
   if uri.is_a? URI::HTTP or uri.is_a? URI::HTTPS then
     begin
-      if params[:opc_url] == ""
-        @short_url = ShortenedUrl.first_or_create(:url => params[:url], :opc_url => params[:opc_url], :email => session[:email])
+      if params[:opc_url] == nil
+        @short_url = ShortenedUrl.first_or_create(:url => params[:url], :opc_url => nil, :email => session[:email])
       else
         @short_opc_url = ShortenedUrl.first_or_create(:url => params[:url], :opc_url => params[:opc_url], :email => session[:email])
       end
