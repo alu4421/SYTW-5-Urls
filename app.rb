@@ -8,6 +8,8 @@ require 'pp'
 require 'data_mapper'
 require 'omniauth-oauth2'      
 require 'omniauth-google-oauth2'
+require 'xmlsimple'
+require 'restclient'
 
 #Database Configuration
   configure :development, :test do

@@ -8,7 +8,10 @@ gem 'omniauth-google-oauth2'
 gem 'pry'
 gem 'erubis'
 gem 'rack-cache'
-
+gem 'restclient'
+gem 'xml-simple'
+gem 'dm-core'
+gem 'dm-migrations'
 
 group :production do
 	gem "pg"
