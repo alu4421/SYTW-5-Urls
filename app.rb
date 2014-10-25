@@ -21,13 +21,13 @@ require 'omniauth-google-oauth2'
   DataMapper::Logger.new($stdout, :debug)
   DataMapper::Model.raise_on_save_failure = true 
 
+  require_relative 'model'
+
   DataMapper.finalize
 
   #DataMapper.auto_migrate!
   DataMapper.auto_upgrade! #No delete information, update
 #End Database Configuration
-
-require_relative 'model'
 
 Base = 36 #base alfanumerica 36, no contiene la ñ para la ñ incorporar la base 64.
 
@@ -45,7 +45,7 @@ get '/' do
   if session[:auth] then
     @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :email => session[:email])
   else
-    @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :email => "")
+    @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20) #, :email => ""
   end
   haml :index
 end

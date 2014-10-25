@@ -1,4 +1,4 @@
-!!!
+-!!!
 %html{:lang => "es"}
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "content-type"}/
@@ -13,12 +13,12 @@
     .navbar.navbar-default.navbar-fixed-top
       .container
         .navbar-header
-          %a.navbar-brand{:href => "/"} Inicio
+          %a.navbar-brand{:role => "navigation", :href => "/"} Inicio
           %button.navbar-toggle{"data-target" => "#navbar-main", "data-toggle" => "collapse", :type => "button"}
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-        %navbar-main.navbar-collapse.collapse            
+        #navbar-main.navbar-collapse.collapse            
           %nav.navbar-nav.navbar-right
             -if !session[:auth]
               %a.navbar-brand{:href => "/"} Registrese: 
@@ -28,10 +28,11 @@
                 %img{:alt => "Facebook", :src => "/img/ico/facebook.ico", :width => "40"}/
               %a{:href => "#"}
                 %img{:alt => "Twitter", :src => "/img/ico/twitter.ico", :width => "40"}/
-            -else
+            -elsif session[:auth]
               %a.navbar-brand{:href => "/"} Bienvenido, #{session[:nombre]}
-              %a.button.btn.btn-danger{:href=>'/logout', :type => "button"} Salir 
+              %a.button.btn.btn-danger{:href=>'/logout', :type => "button"} Salir
 
+      / /.navbar-collapse
     .container-full
       .row
         .text-center.v-center
