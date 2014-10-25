@@ -45,7 +45,7 @@ get '/' do
   if session[:auth] then
     @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :email => session[:email])
   else
-    @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20) #, :email => ""
+    @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :email => "")
   end
   haml :index
 end
