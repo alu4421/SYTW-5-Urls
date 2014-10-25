@@ -27,6 +27,8 @@ require 'omniauth-google-oauth2'
   DataMapper.auto_upgrade! #No delete information, update
 #End Database Configuration
 
+require_relative 'model'
+
 Base = 36 #base alfanumerica 36, no contiene la ñ para la ñ incorporar la base 64.
 
 #User Control
@@ -40,8 +42,11 @@ Base = 36 #base alfanumerica 36, no contiene la ñ para la ñ incorporar la base
 #End User Control
 
 get '/' do
-    session[:email] = ""
+  if session[:auth] then
+    @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :email => session[:email])
+  else
     @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :email => "")
+  end
   haml :index
 end
 
@@ -49,6 +54,7 @@ end
 get '/auth/:name/callback' do
     session[:auth] = @auth = request.env['omniauth.auth']
     session[:email] = @auth['info'].email
+    session[:nombre] = @auth['info'].name
     if session[:auth] then
       @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :email => session[:email])
       haml :index

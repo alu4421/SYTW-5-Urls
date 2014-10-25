@@ -3,8 +3,8 @@ html,body {
 }
 
 h1 {
-  font-family: Arial,sans-serif
-  font-size:80px;
+  font-family: Arial,sans-serif;
+  font-size:xx-large;
   color:#DDCCEE;
 }
 
@@ -14,21 +14,33 @@ h1 {
 
 /* Custom container */
 .container-full {
-  margin: 0 auto;
+  margin: auto;
   width: 100%;
-  min-height:20%;
+  min-height: 10%;
   background-color:#110022;
-  color:#eee;
+  color:#fff;
+  overflow:hidden;
+}
+.container-full2 {
+  margin: auto;
+  width: 100%;
+  min-height: 10%;
+  background-color:#fff;
   overflow:hidden;
 }
 
+.navbar-fixed-top{
+  background-color:#110022;
+  border: 0;
+
+}
 .container-full a {
-  color:#efefef;
-  text-decoration:none;
+  color:#fff;
+  text-decoration: none;
 }
 
 .v-center {
-  margin-top:10%;
+  margin-top:80px;
 }
 
 .container-down {
