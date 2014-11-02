@@ -8,6 +8,8 @@ require 'pp'
 require 'data_mapper'
 require 'omniauth-oauth2'      
 require 'omniauth-google-oauth2'
+require 'xmlsimple'
+require 'restclient'
 
 #Database Configuration
   configure :development, :test do
@@ -72,9 +74,9 @@ post '/' do
   if uri.is_a? URI::HTTP or uri.is_a? URI::HTTPS then
     begin
       if params[:opc_url] == nil
-        @short_url = ShortenedUrl.first_or_create(:url => params[:url], :opc_url => nil, :email => session[:email])
+        @short_url = ShortenedUrl.first_or_create(:url => params[:url], :opc_url => nil, :email => session[:email], :created_at => Time.now)
       else
-        @short_opc_url = ShortenedUrl.first_or_create(:url => params[:url], :opc_url => params[:opc_url], :email => session[:email])
+        @short_opc_url = ShortenedUrl.first_or_create(:url => params[:url], :opc_url => params[:opc_url], :email => session[:email], :n_visits => 0, :created_at => Time.now)
       end
     rescue Exception => e
       puts "EXCEPTION!"
@@ -95,10 +97,15 @@ get '/:shortened' do
   short_opc_url = ShortenedUrl.first(:opc_url => params[:shortened], :email => session[:email])
 
   if short_opc_url #Si tiene información, entonces devolvera por opc_ulr
+    short_opc_url.n_visits += 1
+    short_opc_url.save
+    #visit = Visit.new(:created_at => Time.now)
+    #visit.save
     redirect short_opc_url.url, 301
   else
     redirect short_url.url, 301
   end
+
 end
 
 
