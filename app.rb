@@ -10,6 +10,7 @@ require 'omniauth-oauth2'
 require 'omniauth-google-oauth2'
 require 'xmlsimple'
 require 'restclient'
+require 'chartkick'
 
 #Database Configuration
   configure :development, :test do
@@ -45,9 +46,9 @@ Base = 36 #base alfanumerica 36, no contiene la ñ para la ñ incorporar la base
 
 get '/' do
   if session[:auth] then
-    @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :email => session[:email])
+    @list = Shorturl.all(:order => [ :id.asc ], :limit => 20, :email => session[:email])
   else
-    @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :email => nil)
+    @list = Shorturl.all(:order => [ :id.asc ], :limit => 20, :email => nil)
   end
   haml :index
 end
@@ -58,7 +59,7 @@ get '/auth/:name/callback' do
     session[:email] = @auth['info'].email
     session[:nombre] = @auth['info'].name
     if session[:auth] then
-      @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :email => session[:email])
+      @list = Shorturl.all(:order => [ :id.asc ], :limit => 20, :email => session[:email])
       redirect '/'
     end
     haml :index
@@ -74,9 +75,9 @@ post '/' do
   if uri.is_a? URI::HTTP or uri.is_a? URI::HTTPS then
     begin
       if params[:opc_url] == nil
-        @short_url = ShortenedUrl.first_or_create(:url => params[:url], :opc_url => nil, :email => session[:email], :created_at => Time.now)
+        @short_url = Shorturl.first_or_create(:url => params[:url], :opc_url => nil, :email => session[:email], :created_at => Time.now)
       else
-        @short_opc_url = ShortenedUrl.first_or_create(:url => params[:url], :opc_url => params[:opc_url], :email => session[:email], :n_visits => 0, :created_at => Time.now)
+        @short_opc_url = Shorturl.first_or_create(:url => params[:url], :opc_url => params[:opc_url], :email => session[:email], :n_visits => 0, :created_at => Time.now)
       end
     rescue Exception => e
       puts "EXCEPTION!"
@@ -91,16 +92,16 @@ end
 
 get '/:shortened' do
   #URLs without short urls, we use id.
-  short_url = ShortenedUrl.first(:id => params[:shortened].to_i(Base), :email => session[:email])
+  short_url = Shorturl.first(:id => params[:shortened].to_i(Base), :email => session[:email])
   #URLs witho short urls, we use 
   #URLs con parametros urls corto, por lo que se usara el campo opc_url
-  short_opc_url = ShortenedUrl.first(:opc_url => params[:shortened], :email => session[:email])
+  short_opc_url = Shorturl.first(:opc_url => params[:shortened], :email => session[:email])
 
-  if short_opc_url #Si tiene información, entonces devolvera por opc_ulr
+  if short_opc_url then #Si tiene información, entonces devolvera por opc_ulr
     short_opc_url.n_visits += 1
     short_opc_url.save
-    #visit = Visit.new(:created_at => Time.now)
-    #visit.save
+    visits = Visit.new(:created_at => Time.now, :shorturl => short_opc_url)
+    visits.save
     redirect short_opc_url.url, 301
   else
     redirect short_url.url, 301

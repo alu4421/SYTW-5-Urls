@@ -3,7 +3,7 @@ require 'xmlsimple'
 require 'dm-core'
 require 'dm-migrations'
 
-class ShortenedUrl
+class Shorturl
   include DataMapper::Resource
 	  property :id, Serial
 	  property :url, Text
@@ -23,9 +23,5 @@ class Visit
   property  :ip,          IPAddress
   property  :country,     String
 
-  #belongs_to :shortened_url
-
-  #def prueba
-  #  puts "prueba"
-	#end 
+  belongs_to :shorturl
 end
