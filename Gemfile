@@ -9,9 +9,11 @@ gem 'pry'
 gem 'erubis'
 gem 'rack-cache'
 gem 'restclient'
+gem 'rest-client'
 gem 'xml-simple'
 gem 'dm-core'
 gem 'dm-migrations'
+gem 'chartkick'
 
 group :production do
 	gem "pg"
