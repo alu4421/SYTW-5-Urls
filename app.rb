@@ -53,6 +53,11 @@ get '/' do
   haml :index
 end
 
+get '/estadisticas/:shortened' do
+  #@l_estadistica = Shorturl.all(:order => [ :id.asc ], :limit => 20, :email => session[:email])
+  haml :estadisticas
+end
+
 #Redirect
 get '/auth/:name/callback' do
     session[:auth] = @auth = request.env['omniauth.auth']

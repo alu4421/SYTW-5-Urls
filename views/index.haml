@@ -1,14 +1,37 @@
-%table.table-responsive.table.table-hover
-  %thead
-    %tr
-      %th URL
-      %th Original
-      %th Corta
-  %tbody
-    - @list.each do |url|
-      %tr
-        %td= url.id
-        %td
-          %a{:href=>"/#{url.id.to_s(Base)}" , :target=>"_blank"} #{url.url}
-        %td 
-          %a{:href=>"/#{url.opc_url}", :target=>"_blank"} #{url.opc_url}
+.container-full
+  .row
+    .text-center.v-center
+      %h1 ¿Quieres acortar tu URL?
+      %p.lead By Karen & Haniel
+      %br/
+      %br/
+      %br/
+      %form.form-inline{:action => "/", :method => "post"}
+        .form-group{:style => "text-align:center;margin:0 auto;"}
+          %label(for="url")
+          %input.form-control.input-lg{:autofocus => "", :name => "url", :placeholder => "Introduce Tu URL", :size => "60", :type => "text", :value => ""}/
+          %input.form-control.input-lg{:name => "opc_url", :placeholder => "Opcional URL", :size => "20", :type => "text", :value => ""}/
+          %button.btn.btn-lg.btn-primary{:type => "submit", :value => "Submit"} CORTAR
+      %br/
+      %br/
+.container-full2
+  .row
+    .col-md-4.col-md-offset-4
+      %table.table-responsive.table.table-hover
+        %thead
+          %tr
+            %th URL
+            %th Original
+            %th Corta
+            %th Estadistica
+        %tbody
+          - @list.each do |url|
+            %tr
+              %td= url.id
+              %td
+                %a{:href=>"/#{url.id.to_s(Base)}" , :target=>"_blank"} #{url.url}
+              %td 
+                %a{:href=>"/#{url.opc_url}", :target=>"_blank"} #{url.opc_url}
+              %td
+                %a{:href=>"/estadisticas/#{url.opc_url}", :target=>"_blank"}
+                  %img{:src=>"/img/estadistica.png"}/

@@ -33,32 +33,9 @@
               %a.button.btn.btn-danger{:href=>'/logout', :type => "button"} Salir
 
       / /.navbar-collapse
-    .container-full
-      .row
-        .text-center.v-center
-          %h1 ¿Quieres acortar tu URL?
-          %p.lead By Karen & Haniel
-          %br/
-          %br/
-          %br/
-          %form.form-inline{:action => "/", :method => "post"}
-            .form-group{:style => "text-align:center;margin:0 auto;"}
-              %label(for="url")
-              %input.form-control.input-lg{:autofocus => "", :name => "url", :placeholder => "Introduce Tu URL", :size => "60", :type => "text", :value => ""}/
-              %input.form-control.input-lg{:name => "opc_url", :placeholder => "Opcional URL", :size => "20", :type => "text", :value => ""}/
-              %button.btn.btn-lg.btn-primary{:type => "submit", :value => "Submit"} CORTAR
-          %br/
-          %br/
-    .container-full2
-      .row
-        .col-md-4.col-md-offset-4
-          =yield 
-      .col-lg-12
-        %br/
-        %br/
-        %p.pull-right Leinah ©Copyright 2014    
-        %br/
-        %br/
+    =yield 
+    .col-md-12
+      %p.pull-right Leinah ©Copyright 2014    
     / script references
     %script{:src => "//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"}
     %script{:src => "../js/bootstrap.min.js"}
