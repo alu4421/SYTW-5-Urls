@@ -100,7 +100,7 @@ get '/:shortened' do
   if short_opc_url then #Si tiene información, entonces devolvera por opc_ulr
     short_opc_url.n_visits += 1
     short_opc_url.save
-    visits = Visit.new(:created_at => Time.now, :shorturl => short_opc_url)
+    visits = Visit.new(:created_at => Time.now, :ip => get_remote_ip(env), :shorturl => short_opc_url)
     visits.save
     redirect short_opc_url.url, 301
   else
@@ -109,5 +109,16 @@ get '/:shortened' do
 
 end
 
+def get_remote_ip(env)
+  puts "request.url = #{request.url}"
+  puts "request.ip = #{request.ip}"
+  if addr = env['HTTP_X_FORWARDED_FOR']
+    puts "env['HTTP_X_FORWARDED_FOR'] = #{addr}"
+    addr.split(',').first.strip
+  else
+    puts "env['REMOTE_ADDR'] = #{env['REMOTE_ADDR']}"
+    env['REMOTE_ADDR']
+  end
+end
 
 error do haml :index end
