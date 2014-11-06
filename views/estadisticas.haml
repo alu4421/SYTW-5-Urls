@@ -1,5 +1,10 @@
 .container-full3
   .row
-    -if @num = 0
-        .pais.col-xs-12.col-sm-12.col-lg-12
-          = geo_chart("hola")
+    .country.col-sm-12
+      %br
+      %br
+      %br
+      .text-center.v-center
+        %h1 #{@link.opc_url} : Estadisticas de acceso por paises
+        %p.lead By Karen & Haniel
+        = pie_chart @country

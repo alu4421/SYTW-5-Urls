@@ -54,7 +54,19 @@ get '/' do
 end
 
 get '/estadisticas/:shortened' do
-  #@l_estadistica = Shorturl.all(:order => [ :id.asc ], :limit => 20, :email => session[:email])
+   @var = "#{:shortened}"
+   @link = Shorturl.first(:opc_url => params[:shortened])
+   @visitas = Visit.all(:order => [ :id.asc ], :shorturl_id => @link.id)
+   @country = Hash.new
+   @visitas.each { |item|
+    if(@country[item.country].nil? == true)
+      @country[item.country] = 1
+    else
+      @country[item.country] +=1
+    end
+   }
+
+
   haml :estadisticas
 end
 
