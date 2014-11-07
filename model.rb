@@ -22,14 +22,22 @@ class Visit
   property  :created_at,  DateTime
   property  :ip,          IPAddress
   property  :country,     String
+  property  :city,        String
 
   belongs_to :shorturl
 
   before :create, :set_country
+  before :create, :set_city
 
   def set_country
     xml = RestClient.get "http://freegeoip.net/xml/#{ip}"
     self.country = XmlSimple.xml_in(xml.to_s, { 'ForceArray' => false })['CountryName'].to_s
+    self.save
+  end
+
+  def set_city
+    xml = RestClient.get "http://freegeoip.net/xml/#{ip}"
+    self.city = XmlSimple.xml_in(xml.to_s, { 'ForceArray' => false })['City'].to_s
     self.save
   end
 

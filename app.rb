@@ -65,16 +65,30 @@ get '/sign_twitter/?' do
 end
 
 get '/estadisticas/:shortened' do
-   @var = "#{:shortened}"
    @link = Shorturl.first(:opc_url => params[:shortened])
    @visitas = Visit.all(:order => [ :id.asc ], :shorturl_id => @link.id)
    @country = Hash.new
+   @city = Hash.new
+   @time = Hash.new
    @visitas.each { |item|
     if(@country[item.country].nil? == true)
       @country[item.country] = 1
     else
       @country[item.country] +=1
     end
+
+    if(@city[item.city].nil? == true)
+      @city[item.city] = 1
+    else
+      @city[item.city] +=1
+    end
+
+    if(@time[item.created_at].nil? == true)
+      @time[item.created_at] = 1
+    else
+      @time[item.created_at] +=1
+    end
+
    }
 
 

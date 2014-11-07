@@ -7,5 +7,13 @@
       .text-center.v-center
         %h1
           %a{:href=>"/#{@link.opc_url}" , :target=>"_blank"} #{@link.opc_url}
-        %p.lead Estadisticas de acceso por paises
-        = pie_chart @country
+        %p Estadisticas de acceso por paises
+        = geo_chart @country
+        %h1
+          %a{:href=>"/#{@link.opc_url}" , :target=>"_blank"} #{@link.opc_url}
+        %p Estadisticas de acceso por ciudades
+        = pie_chart @city
+        %h1
+          %a{:href=>"/#{@link.opc_url}" , :target=>"_blank"} #{@link.opc_url}
+        %p Estadisticas de acceso por fecha
+        = line_chart @time
