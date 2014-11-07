@@ -27,7 +27,7 @@ class Visit
   belongs_to :shorturl
 
   before :create, :set_country
-  before :create, :set_city
+  after :create, :set_city
 
   def set_country
     xml = RestClient.get "http://freegeoip.net/xml/#{ip}"
@@ -37,7 +37,7 @@ class Visit
 
   def set_city
     xml = RestClient.get "http://freegeoip.net/xml/#{ip}"
-    self.city = XmlSimple.xml_in(xml.to_s, { 'ForceArray' => false })['City'].to_s
+    self.city = XmlSimple.xml_in(xml.to_s, { 'ForceArray' => false })['RegionName'].to_s
     self.save
   end
 
