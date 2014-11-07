@@ -23,7 +23,8 @@
             %th URL
             %th Original
             %th Corta
-            %th Estadistica
+            -if !session[:auth]
+              %th Estadistica
         %tbody
           - @list.each do |url|
             %tr
@@ -32,6 +33,7 @@
                 %a{:href=>"/#{url.id.to_s(Base)}" , :target=>"_blank"} #{url.url}
               %td 
                 %a{:href=>"/#{url.opc_url}", :target=>"_blank"} #{url.opc_url}
-              %td
-                %a{:href=>"/estadisticas/#{url.opc_url}", :target=>"_blank"}
-                  %img{:src=>"/img/estadistica.png"}/
+              -if !session[:auth]
+                %td
+                  %a{:href=>"/estadisticas/#{url.opc_url}", :target=>"_blank"}
+                    %img{:src=>"/img/estadistica.png"}/

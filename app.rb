@@ -8,6 +8,8 @@ require 'pp'
 require 'data_mapper'
 require 'omniauth-oauth2'      
 require 'omniauth-google-oauth2'
+require 'omniauth-twitter'
+require 'omniauth-facebook'
 require 'xmlsimple'
 require 'restclient'
 require 'chartkick'
@@ -38,6 +40,7 @@ Base = 36 #base alfanumerica 36, no contiene la ñ para la ñ incorporar la base
   use OmniAuth::Builder do       
     config = YAML.load_file 'config/config.yml'
     provider :google_oauth2, config['identifier'], config['secret']
+    provider :twitter, config['identifier_twitter'], config['secret_twitter'] 
   end
     
   enable :sessions               
@@ -51,6 +54,14 @@ get '/' do
     @list = Shorturl.all(:order => [ :id.asc ], :limit => 20, :email => nil)
   end
   haml :index
+end
+
+get '/sign_google/?' do
+  redirect '/auth/google_oauth2'
+end
+
+get '/sign_twitter/?' do 
+  redirect '/auth/twitter'
 end
 
 get '/estadisticas/:shortened' do
@@ -69,6 +80,7 @@ get '/estadisticas/:shortened' do
 
   haml :estadisticas
 end
+
 
 #Redirect
 get '/auth/:name/callback' do

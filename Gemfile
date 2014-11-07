@@ -14,6 +14,8 @@ gem 'xml-simple'
 gem 'dm-core'
 gem 'dm-migrations'
 gem 'chartkick'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 
 group :production do
 	gem "pg"

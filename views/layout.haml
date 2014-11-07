@@ -24,11 +24,11 @@
           %nav.navbar-nav.navbar-right
             -if !session[:auth]
               %a.navbar-brand{:href => "/"} Registrese: 
-              %a{:href => "/auth/google_oauth2"}
+              %a{:href => "/sign_google"}
                 %img{:alt => "Google", :src => "/img/ico/googleplus.ico", :width => "40"}/
               %a{:href => "#"}
                 %img{:alt => "Facebook", :src => "/img/ico/facebook.ico", :width => "40"}/
-              %a{:href => "#"}
+              %a{:href => "/sign_twitter"}
                 %img{:alt => "Twitter", :src => "/img/ico/twitter.ico", :width => "40"}/
             -elsif session[:auth]
               %a.navbar-brand{:href => "/"} Bienvenido, #{session[:nombre]}

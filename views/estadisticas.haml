@@ -5,6 +5,7 @@
       %br
       %br
       .text-center.v-center
-        %h1 #{@link.opc_url} : Estadisticas de acceso por paises
-        %p.lead By Karen & Haniel
+        %h1
+          %a{:href=>"/#{@link.opc_url}" , :target=>"_blank"} #{@link.opc_url}
+        %p.lead Estadisticas de acceso por paises
         = pie_chart @country
