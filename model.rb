@@ -15,6 +15,7 @@ class Shorturl
 	  has n, :visits
 end
 
+
 class Visit
   include DataMapper::Resource
 
